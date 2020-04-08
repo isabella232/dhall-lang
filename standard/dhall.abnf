@@ -330,8 +330,8 @@ single-quote-continue =
       interpolation single-quote-continue
     / escaped-quote-pair single-quote-continue
     / escaped-interpolation single-quote-continue
-    / single-quote-char single-quote-continue
     / "''" ; End of text literal
+    / single-quote-char single-quote-continue
 
 ; Escape two single quotes (i.e. replace this sequence with "''")
 escaped-quote-pair = "'''"
@@ -371,17 +371,19 @@ Some                  = %x53.6f.6d.65
 toMap                 = %x74.6f.4d.61.70
 assert                = %x61.73.73.65.72.74
 forall                = %x2200 / %x66.6f.72.61.6c.6c ; "∀" / "forall"
+with                  = %x77.69.74.68
 
 ; Unused rule that could be used as negative lookahead in the
 ; `simple-label` rule for parsers that support this.
 keyword =
       if / then / else
     / let / in
-    / using / missing / as
+    / using / missing 
+    / assert / as
     / Infinity / NaN
     / merge / Some / toMap
-    / assert
     / forall
+    / with
 
 builtin =
       Natural-fold
@@ -806,7 +808,13 @@ combine-types-expression = times-expression         *(whsp combine-types whsp ti
 times-expression         = equal-expression         *(whsp "*" whsp equal-expression)
 equal-expression         = not-equal-expression     *(whsp "==" whsp not-equal-expression)
 not-equal-expression     = equivalent-expression    *(whsp "!=" whsp equivalent-expression)
-equivalent-expression    = application-expression   *(whsp equivalent whsp application-expression)
+equivalent-expression    = with-expression          *(whsp equivalent whsp with-expression)
+
+with-expression = application-expression *(whsp1 with whsp1 with-clause)
+
+with-clause =
+    any-label-or-some *(whsp "." whsp any-label-or-some) whsp "=" whsp application-expression
+
 
 ; Import expressions need to be separated by some whitespace, otherwise there
 ; would be ambiguity: `./ab` could be interpreted as "import the file `./ab`",
@@ -879,6 +887,7 @@ primitive-expression =
     ; "( e )"
     / "(" complete-expression ")"
 
+
 record-type-or-literal =
       empty-record-literal
     / non-empty-record-type-or-literal
@@ -888,7 +897,7 @@ empty-record-literal = "="
 empty-record-type = ""
 
 non-empty-record-type-or-literal =
-    (non-empty-record-literal / non-empty-record-type)
+    (non-empty-record-type / non-empty-record-literal)
 
 non-empty-record-type =
     record-type-entry *(whsp "," whsp record-type-entry)
@@ -899,7 +908,12 @@ non-empty-record-literal =
     record-literal-entry *(whsp "," whsp record-literal-entry)
 
 record-literal-entry =
-    any-label-or-some *(whsp "." whsp any-label-or-some) whsp "=" whsp expression
+    any-label-or-some (record-literal-normal-entry / record-literal-punned-entry)
+
+record-literal-normal-entry =
+    *(whsp "." whsp any-label-or-some) whsp "=" whsp expression
+record-literal-punned-entry = ""
+
 
 union-type =
       non-empty-union-type
@@ -913,6 +927,7 @@ non-empty-union-type =
 ; x : Natural
 ; x
 union-type-entry = any-label-or-some [ whsp ":" whsp1 expression ]
+
 
 non-empty-list-literal =
     "[" whsp [ "," whsp ] expression whsp *("," whsp expression whsp) "]"

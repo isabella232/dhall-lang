@@ -26,12 +26,14 @@ runCommand "try-dhall" {} ''
   ${coreutils}/bin/ln --symbolic ${logo.dhallLarge} $out/img/dhall-large-logo.svg
   ${coreutils}/bin/ln --symbolic ${logo.dhallSmall} $out/img/dhall-small-logo.svg
   ${coreutils}/bin/ln --symbolic ${logo.discourse} $out/img/discourse-logo.svg
-  ${coreutils}/bin/ln --symbolic ${logo.github}/PNG/GitHub-Mark-32px.png $out/img/github-logo.png
+  ${coreutils}/bin/ln --symbolic ${logo.github}/GitHub-Mark/PNG/GitHub-Mark-32px.png $out/img/github-logo.png
+  ${coreutils}/bin/ln --symbolic ${logo.golang}/Go-Logo/SVG/Go-Logo_Blue.svg $out/img/go-logo.svg
   ${coreutils}/bin/ln --symbolic ${logo.haskell} $out/img/haskell-logo.png
   ${coreutils}/bin/ln --symbolic ${logo.json} $out/img/json-logo.svg
   ${coreutils}/bin/ln --symbolic ${logo.kops} $out/img/kops-logo.svg
   ${coreutils}/bin/ln --symbolic ${logo.kubernetes} $out/img/kubernetes-logo.svg
   ${coreutils}/bin/ln --symbolic ${logo.nix} $out/img/nix-logo.png
+  ${coreutils}/bin/ln --symbolic ${logo.openCollective} $out/img/opencollective-logo.svg
   ${coreutils}/bin/ln --symbolic ${logo.prometheus} $out/img/prometheus-logo.svg
   ${coreutils}/bin/ln --symbolic ${logo.ruby} $out/img/ruby-logo.svg
   ${coreutils}/bin/ln --symbolic ${logo.rust} $out/img/rust-logo.png

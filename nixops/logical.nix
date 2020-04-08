@@ -175,7 +175,7 @@
 
       virtualHosts =
         let
-          latestRelease = "v13.0.0";
+          latestRelease = "v15.0.0";
 
           prelude = {
             forceSSL = true;
@@ -413,6 +413,8 @@
 
             ${pkgs.bash}/bin/bash ${discourseDirectory}/launcher rebuild app
           '';
+
+          serviceConfig.RemainAfterExit = true;
 
           wantedBy = [ "multi-user.target" ];
 

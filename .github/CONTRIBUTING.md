@@ -39,9 +39,10 @@ The two most common repositories that we often redirect people to are:
 
 ## What is the correct way to ask a question?
 
-You can either open issues [here][dhall-lang-issues] to ask a question or use
-[Stack Overflow][stack-overflow].  I (@Gabriel439) subscribe by e-mail to any
-issues created with that tag.
+You can either open issues [here][dhall-lang-issues] to ask a question
+or use the [Dhall discourse][dhall-discourse].  You can also use
+[Stack Overflow][stack-overflow].  I (@Gabriel439) subscribe by e-mail
+to any Stack Overflow issues created with the tag `dhall`.
 
 ## Do I belong here?
 
@@ -89,7 +90,7 @@ actively maintained implementations of the Dhall language.  Votes are made
 using the GitHub pull request review feature.  Each implementation gets one
 vote.
 
-At the time of this writing the four actively supported implementations of Dhall
+At the time of this writing the five actively supported implementations of Dhall
 are:
 
 *   [`dhall-haskell` - Haskell bindings to Dhall](https://github.com/dhall-lang/dhall-haskell)
@@ -107,6 +108,10 @@ are:
 *   [`dhall-rust` - Rust bindings to Dhall](https://github.com/Nadrieril/dhall-rust)
 
     Led by @Nadrieril
+
+*   [`dhall-golang` - Go bindings to Dhall](https://github.com/philandstuff/dhall-golang)
+
+    Led by @philandstuff
 
 Each of those implementations get one vote cast by the lead contributor for each
 implementation.
@@ -166,6 +171,7 @@ Learn by doing and get your hands dirty!
 [infrastructure]: https://github.com/dhall-lang/dhall-lang/tree/master/nixops
 [standard]: https://github.com/dhall-lang/dhall-lang/tree/master/standard
 [prelude]: https://github.com/dhall-lang/dhall-lang/tree/master/Prelude
+[dhall-discourse]: https://discourse.dhall-lang.org/
 [dhall-haskell-issues]: https://github.com/dhall-lang/dhall-haskell/issues
 [dhall-lang-issues]: https://github.com/dhall-lang/dhall-lang/issues
 [dhall-lang-pulls]: https://github.com/dhall-lang/dhall-lang/pulls

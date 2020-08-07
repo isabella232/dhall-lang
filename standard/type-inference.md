@@ -298,13 +298,13 @@ A `List` literal's type is inferred either from the type of the elements (if
 non-empty) or from the type annotation (if empty):
 
 
-    Γ ⊢ T₀ : c   T₀ ⇥ List T₁   T₁ : Type
-    ─────────────────────────────────────
+    Γ ⊢ T₀ : c   T₀ ⇥ List T₁   Γ ⊢ T₁ : Type
+    ─────────────────────────────────────────
     Γ ⊢ ([] : T₀) : List T₁
 
 
-    Γ ⊢ t : T₀   T₀ : Type   Γ ⊢ [ ts… ] : List T₁   T₀ ≡ T₁
-    ────────────────────────────────────────────────────────
+    Γ ⊢ t : T₀   Γ ⊢ T₀ : Type   Γ ⊢ [ ts… ] : List T₁   T₀ ≡ T₁
+    ────────────────────────────────────────────────────────────
     Γ ⊢ [ t, ts… ] : List T₀
 
 
@@ -389,16 +389,6 @@ isolation:
 Note that the above rules forbid an `Optional` element that is a `Type`.  More
 generally, if the element type is not a `Type` then that is a type error.
 
-The built-in functions on `Optional` values have the following types:
-
-
-    ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    Γ ⊢ Optional/fold : ∀(a : Type) → Optional a → ∀(optional : Type) → ∀(just : a → optional) → ∀(nothing : optional) → optional
-
-
-    ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-    Γ ⊢ Optional/build : ∀(a : Type) → (∀(optional : Type) → ∀(just : a → optional) → ∀(nothing : optional) → optional) → Optional a
-
 
 ## Records
 
@@ -415,8 +405,8 @@ An empty record is a `Type`:
 A non-empty record can store terms, types and kinds:
 
 
-    Γ ⊢ T : t₀   Γ ⊢ { xs… } : t₁  t₀ ⋁ t₁ = t₂
-    ───────────────────────────────────────────  ; x ∉ { xs… }
+    Γ ⊢ T : t₀   Γ ⊢ { xs… } : t₁   t₀ ⋁ t₁ = t₂
+    ────────────────────────────────────────────  ; x ∉ { xs… }
     Γ ⊢ { x : T, xs… } : t₂
 
 
@@ -608,42 +598,19 @@ desugared form:
 Union types are "anonymous", meaning that they are uniquely defined by the names
 and types of their alternatives.
 
-A union can have alternatives of term-level values and functions:
+An empty union is a `Type`:
 
 
     ─────────────
     Γ ⊢ <> : Type
 
 
-    Γ ⊢ T : Type   Γ ⊢ < ts… > : Type
-    ─────────────────────────────────  ; x ∉ < ts… >
-    Γ ⊢ < x : T | ts… > : Type
+A non-empty union can have alternatives of terms, types and kinds:
 
 
-... or alternatives of types (if it is non-empty):
-
-
-    Γ ⊢ T : Kind
-    ────────────────────
-    Γ ⊢ < x : T > : Kind
-
-
-    Γ ⊢ T : Kind   Γ ⊢ < ts… > : Kind
-    ─────────────────────────────────  ; x ∉ < ts… >
-    Γ ⊢ < x : T | ts… > : Kind
-
-
-... or alternatives of kinds (if it is non-empty):
-
-
-    Γ ⊢ T : Sort
-    ────────────────────
-    Γ ⊢ < x : T > : Sort
-
-
-    Γ ⊢ T : Sort   Γ ⊢ < ts… > : Sort
-    ─────────────────────────────────  ; x ∉ < ts… >
-    Γ ⊢ < x : T | ts… > : Sort
+    Γ ⊢ T : t₀   Γ ⊢ < xs… > : t₁  t₀ ⋁ t₁ = t₂
+    ───────────────────────────────────────────  ; x ∉ { xs… }
+    Γ ⊢ < x : T | xs… > : t₂
 
 
 A union type may contain alternatives without an explicit type label:
@@ -721,7 +688,7 @@ An implementation could simply loop over the inferred record type.
 
 `Optional`s can also be `merge`d as if they had type `< None | Some : A >`:
 
-    
+
     Γ₀ ⊢ o : Optional A
     ↑(1, x, 0, (Γ₀, x : < None | Some : A >)) = Γ₁
     Γ₁ ⊢ merge t x : T

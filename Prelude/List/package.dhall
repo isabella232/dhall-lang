@@ -34,6 +34,9 @@
 , head =
       ./head sha256:0d2e65ba0aea908377e46d22020dc3ad970284f4ee4eb8e6b8c51e53038c0026
     ? ./head
+, index =
+      ./index sha256:e657b55ecae4d899465c3032cb1a64c6aa6dc2aa3034204f3c15ce5c96c03e63
+    ? ./index
 , indexed =
       ./indexed sha256:58bb44457fa81adf26f5123c1b2e8bef0c5aa22dac5fa5ebdfb7da84563b027f
     ? ./indexed
@@ -67,7 +70,13 @@
 , take =
       ./take sha256:b3e08ee8c3a5bf3d8ccee6b2b2008fbb8e51e7373aef6f1af67ad10078c9fbfa
     ? ./take
+, unpackOptionals =
+      ./unpackOptionals sha256:0cbaa920f429cf7fc3907f8a9143203fe948883913560e6e1043223e6b3d05e4
+    ? ./unpackOptionals
 , unzip =
       ./unzip sha256:4d6003e9e683a289fe33f4c90f958eb1e08ea0bbb474210fcd90d1885c9660e9
     ? ./unzip
+, zip =
+      ./zip sha256:85ed955eabf3998767f4ad2a28e57d40cd4c68a95519d79e9b622f1d26d979da
+    ? ./zip
 }
